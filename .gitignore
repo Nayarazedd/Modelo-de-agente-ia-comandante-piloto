@@ -1,0 +1,15 @@
+# Ignora arquivos locais de ambiente com senhas e chaves
+.env
+
+# Ignora pastas de cache do Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ignora bancos de dados locais de teste
+*.db
+
+# Ignora pastas de ambiente virtual do Python (caso crie localmente)
+venv/
+env/
+.venv/
