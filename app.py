@@ -24,12 +24,14 @@ client = Groq(api_key=api_key)
 # System Prompt base do Comandante
 SYSTEM_PROMPT_BASE = """
 # CONTEXTO E MISSÃO
-Você é um comandante e piloto de aviação comercial sênior com mais de 15 anos de experiência em voos internacionais. 
-Sua missão é responder às dúvidas do usuário com precisão técnica, clareza didática e total coerência contextual.
+Voce é um especialista em web designer voltado a chatbot's e com foco em modelos e estetica Zen, zen gotico asiatico e europeu. 
+Seu publico alvo ao criadores autonomos, sem experiencia que querem criar aplicaçoes tranquilizadora que podem fugir da caixa do esperado. 
+
+
 
 # ESTILO E TOM
-- Estilo: Profissional, focado, articulado e didático. Use termos técnicos autênticos da aviação explicados de maneira acessível.
-- Tom: Calmo, confiante, acolhedor e focado na segurança da comunicação e do voo.
+- Estilo: Profissional, focado, articulado e didático. Use termos técnicos autênticos do estilo explicados de maneira acessível.
+- Tom: Calmo, confiante, acolhedor e focado em atender seu cliente.
 - Formato: Respostas diretas e organizadas em parágrafos curtos. Nunca invente fatos.
 """
 
@@ -60,14 +62,14 @@ def gerar_resumo_estado(mensagens_antigas):
 # Inicializa o estado da sessão no Streamlit
 if "messages" not in st.session_state:
     st.session_state.messages = [
-        {"role": "assistant", "content": "Painel ativado. Aqui é o Comandante. Estamos com todos os sistemas operacionais e prontos para o briefing. Qual é a nossa rota ou dúvida para o voo de hoje?"}
+        {"role": "assistant", "content": "Deixe me ajudar em seu processo de ciação para que sua mente nao exploda"}
     ]
 
 if "resumo_memoria" not in st.session_state:
     st.session_state.resumo_memoria = "Nenhum histórico anterior."
 
 # Título da aplicação na interface
-st.title("✈️ Cockpit - Comandante de Bordo")
+st.title("Zen-esthetic")
 st.markdown("### Sistema de Comunicação com Gestão de Memória Consolidada")
 
 # Exibe o histórico de mensagens na tela
@@ -76,7 +78,7 @@ for message in st.session_state.messages:
         st.markdown(message["content"])
 
 # Entrada de texto do usuário
-if prompt_usuario := st.chat_input("Digite sua dúvida ou comando para o Comandante..."):
+if prompt_usuario := st.chat_input("Digite sua dúvida..."):
     st.session_state.messages.append({"role": "user", "content": prompt_usuario})
     
     with st.chat_message("user"):
@@ -99,7 +101,7 @@ if prompt_usuario := st.chat_input("Digite sua dúvida ou comando para o Comanda
         mensagens_para_ia = [{"role": "system", "content": system_prompt_dinamico}] + st.session_state.messages
         
         with st.chat_message("assistant"):
-            with st.spinner("Transmitindo dados pelo canal de bordo..."):
+            with st.spinner("Transmitindo dados pelo pedra..."):
                 resposta = client.chat.completions.create(
                     model="openai/gpt-oss-120b",
                     messages=mensagens_para_ia,
@@ -111,5 +113,5 @@ if prompt_usuario := st.chat_input("Digite sua dúvida ou comando para o Comanda
         st.session_state.messages.append({"role": "assistant", "content": texto_resposta})
 
     except Exception as e:
-        error_msg = f"Falha na comunicação de bordo: {str(e)}"
+        error_msg = f"Falha na comunicação: {str(e)}"
         st.error(error_msg)
